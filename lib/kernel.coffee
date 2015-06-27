@@ -83,9 +83,9 @@ module.exports.forwardMessage = (chat_id, from_chat_id, message_id, cb) ->
     cb data)
 
 # Use this method to send photos. On success the sent message is returned
-module.exports.sendPhoto = (photo, caption = '', reply_to_message_id = '', reply_markup = '', cb) ->
+module.exports.sendPhoto = (chat_id, photo, caption = '', reply_to_message_id = '', reply_markup = '', cb) ->
   payload =
-    chat_id : @chat_id
+    chat_id : chat_id
     photo : photo
     caption : caption
     reply_to_message_id : reply_to_message_id
@@ -99,9 +99,9 @@ module.exports.sendPhoto = (photo, caption = '', reply_to_message_id = '', reply
 # in an .ogg file encoded with OPUS (other formats may be sent as Document).
 # On success, the sent Message is returned.
 
-module.exports.sendAudio = (audio, reply_to_message_id = '', reply_markup = '', cb) ->
+module.exports.sendAudio = (chat_id, audio, reply_to_message_id = '', reply_markup = '', cb) ->
   payload =
-    chat_id : @chat_id
+    chat_id : chat_id
     audio : audio
     reply_to_message_id : reply_to_message_id
     reply_markup : reply_markup
@@ -110,9 +110,9 @@ module.exports.sendAudio = (audio, reply_to_message_id = '', reply_markup = '', 
     cb data)
 
 # Use this method to send general files. On success, the sent Message is returned
-module.exports.sendDocument = (document, reply_to_message_id = '', reply_markup = '', cb) ->
+module.exports.sendDocument = (chat_id, document, reply_to_message_id = '', reply_markup = '', cb) ->
   payload =
-    chat_id : @chat_id
+    chat_id : chat_id
     document : document
     reply_to_message_id : reply_to_message_id
     reply_markup : reply_markup
@@ -121,9 +121,9 @@ module.exports.sendDocument = (document, reply_to_message_id = '', reply_markup 
     cb data)
 
 # Use this method to send .webp stickers. On success, the sent Message is returned
-module.exports.sendSticker = (sticker, reply_to_message_id = '', reply_markup = '', cb) ->
+module.exports.sendSticker = (chat_id, sticker, reply_to_message_id = '', reply_markup = '', cb) ->
   payload =
-    chat_id : @chat_id
+    chat_id : chat_id
     sticker : sticker
     reply_to_message_id : reply_to_message_id
     reply_markup : reply_markup
@@ -132,9 +132,9 @@ module.exports.sendSticker = (sticker, reply_to_message_id = '', reply_markup = 
     cb data)
 
 # Use this method to send general files. On success, the sent Message is returned
-module.exports.sendFiles = (file, reply_to_message_id = '', reply_markup = '', cb) ->
+module.exports.sendFiles = (chat_id, file, reply_to_message_id = '', reply_markup = '', cb) ->
   payload =
-    chat_id : @chat_id
+    chat_id : chat_id
     file : file
     reply_to_message_id : reply_to_message_id
     reply_markup : reply_markup
@@ -144,9 +144,9 @@ module.exports.sendFiles = (file, reply_to_message_id = '', reply_markup = '', c
 
 # Use this method to send video files, Telegram client suppor mp4 videos.
 # other format may be sent as Document On success, the sent Message is returned
-module.exports.sendVideo = (video, reply_to_message_id = '', reply_markup = '', cb) ->
+module.exports.sendVideo = (chat_id, video, reply_to_message_id = '', reply_markup = '', cb) ->
   payload =
-    chat_id : @chat_id
+    chat_id : chat_id
     video : video
     reply_to_message_id : reply_to_message_id
     reply_markup : reply_markup
@@ -155,9 +155,9 @@ module.exports.sendVideo = (video, reply_to_message_id = '', reply_markup = '', 
     cb data)
 
 # Use this method to send location. On success, the sent Message is returned
-module.exports.sendLocation = (latitude, longitude, reply_to_message_id = '', reply_markup = '', cb) ->
+module.exports.sendLocation = (chat_id, latitude, longitude, reply_to_message_id = '', reply_markup = '', cb) ->
   payload =
-    chat_id : @chat_id
+    chat_id : chat_id
     latitude : latitude
     longitude: longitude
     reply_to_message_id : reply_to_message_id
@@ -169,9 +169,9 @@ module.exports.sendLocation = (latitude, longitude, reply_to_message_id = '', re
 # Use this method when you need to tell the user that something is happening on
 # the bot's side. The status is set for 5 seconds or less (when a message arrives
 # from your bot, Telegram clients clear its typing status).
-module.exports.sendChatAction = (action, cb) ->
+module.exports.sendChatAction = (chat_id, action, cb) ->
   payload =
-    chat_id : @chat_id
+    chat_id : chat_id
     action : action
 
   post_handler('sendChatAction', payload, (data) ->
@@ -179,9 +179,9 @@ module.exports.sendChatAction = (action, cb) ->
 
 # Use this method to get a list of profile pictures for a user.
 # Returns a UserProfilePhotos object
-module.exports.getUserProfilePictures = (user_id, offset = '', limit = '', cb) ->
+module.exports.getUserProfilePictures = (chat_id, user_id, offset = '', limit = '', cb) ->
   payload =
-    chat_id : @chat_id
+    chat_id : chat_id
     user_id : user_id
     offset : offset
     limit : limit
