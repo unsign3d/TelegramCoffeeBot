@@ -9,12 +9,19 @@ config = require '../config'
 query   = require 'querystring'
 request = require 'request'
 
-chat_id = 0
+offset =  0
 
+lastUpdate = (list) ->
+  mes = list[list.length-1]
+  if offset < mes.update_id
+    offset = mes.update_id
+    return mes.message
+  else
+    return null
 
 
 # this is just a private function that make commands available
-url_handler = (cmd, payload, callback) ->
+post_handler = (cmd, payload, callback) ->
   options =
     method : 'POST'
     uri : config.api_url+config.api_token+'/'+cmd
@@ -25,42 +32,54 @@ url_handler = (cmd, payload, callback) ->
     if !err && resp.statusCode == 200
       callback body  # Show the HTML for the Google homepage.
     else
-      callback err
+      console.error "error in request"
+      console.error body
+      callabck null
 
+get_handler = (cmd, callback) ->
+  options =
+    method : 'GET'
+    uri : config.api_url+config.api_token+'/'+cmd
+    json : true
 
-#Set the chat id
-module.exports.setChatId = (chat_id) ->
-  @chat_id = chat_id
+  request options, (err, resp, body) ->
+    if !err && resp.statusCode == 200
+      callback body  # Show the HTML for the Google homepage.
+    else
+      console.error "error in request"
+      console.error body
+      callback null
+
 
 # Use this method to receive incoming updates using long polling
 module.exports.getUpdates = (cb) ->
-  url_handler('getUpdates', '', (data) ->
-    cb(data))
+  payload =
+    offset: 734575207
+  post_handler('getUpdates', payload, (data) ->
+    cb(lastUpdate data.result))
 
 # A simple method for testing your bot's auth token. Requires no parameters.
 # Returns basic information about the bot in form of a User object.
 
 module.exports.getMe = (cb) ->
-  url_handler('getMe', '', (data)->
+  get_handler('getMe', (data)->
     cb data)
 
 # Use this method to send text messages. On success, the sent Message is returned.
-module.exports.sendMessage = (message, cb) ->
-  payload =
-    chat_id : @chat_id
-    text : message
+module.exports.sendMessage = (chat_id, message, cb) ->
 
-  url_handler('setMessage', payload, (data) ->
+  get_handler('sendMessage?chat_id='+chat_id+'&text='+message, (data) ->
+
     cb data )
 
 # Use this method to forward message of any kind, on success, the sent Message is returned
-module.exports.forwardMessage = (from_chat_id, message_id, cb) ->
+module.exports.forwardMessage = (chat_id, from_chat_id, message_id, cb) ->
   payload =
-    chat_id : @chat_id
+    chat_id : chat_id
     from_chat_id : from_chat_id
     message_id : message_id
 
-  url_handler('forwardMessage', payload, (data) ->
+  post_handler('forwardMessage', payload, (data) ->
     cb data)
 
 # Use this method to send photos. On success the sent message is returned
@@ -72,7 +91,7 @@ module.exports.sendPhoto = (photo, caption = '', reply_to_message_id = '', reply
     reply_to_message_id : reply_to_message_id
     reply_markup : reply_markup
 
-  url_handler('sendPhoto', payload, (data) ->
+  post_handler('sendPhoto', payload, (data) ->
     cb data)
 
 # Use this method to send audio files, if you want Telegram clients to display
@@ -87,7 +106,7 @@ module.exports.sendAudio = (audio, reply_to_message_id = '', reply_markup = '', 
     reply_to_message_id : reply_to_message_id
     reply_markup : reply_markup
 
-  url_handler('sendAudio', payload, (data) ->
+  post_handler('sendAudio', payload, (data) ->
     cb data)
 
 # Use this method to send general files. On success, the sent Message is returned
@@ -98,7 +117,7 @@ module.exports.sendDocument = (document, reply_to_message_id = '', reply_markup 
     reply_to_message_id : reply_to_message_id
     reply_markup : reply_markup
 
-  url_handler('sendDocument', payload, (data) ->
+  post_handler('sendDocument', payload, (data) ->
     cb data)
 
 # Use this method to send .webp stickers. On success, the sent Message is returned
@@ -109,7 +128,7 @@ module.exports.sendSticker = (sticker, reply_to_message_id = '', reply_markup = 
     reply_to_message_id : reply_to_message_id
     reply_markup : reply_markup
 
-  url_handler('sendSticker', payload, (data) ->
+  post_handler('sendSticker', payload, (data) ->
     cb data)
 
 # Use this method to send general files. On success, the sent Message is returned
@@ -120,7 +139,7 @@ module.exports.sendFiles = (file, reply_to_message_id = '', reply_markup = '', c
     reply_to_message_id : reply_to_message_id
     reply_markup : reply_markup
 
-  url_handler('sendVideo', payload, (data)->
+  post_handler('sendVideo', payload, (data)->
     cb data)
 
 # Use this method to send video files, Telegram client suppor mp4 videos.
@@ -132,7 +151,7 @@ module.exports.sendVideo = (video, reply_to_message_id = '', reply_markup = '', 
     reply_to_message_id : reply_to_message_id
     reply_markup : reply_markup
 
-  url_handler('sendVideo', payload, (data) ->
+  post_handler('sendVideo', payload, (data) ->
     cb data)
 
 # Use this method to send location. On success, the sent Message is returned
@@ -144,7 +163,7 @@ module.exports.sendLocation = (latitude, longitude, reply_to_message_id = '', re
     reply_to_message_id : reply_to_message_id
     reply_markup : reply_markup
 
-  url_handler('sendLocation', payload, (data) ->
+  post_handler('sendLocation', payload, (data) ->
     cb data)
 
 # Use this method when you need to tell the user that something is happening on
@@ -155,7 +174,7 @@ module.exports.sendChatAction = (action, cb) ->
     chat_id : @chat_id
     action : action
 
-  url_handler('sendChatAction', payload, (data) ->
+  post_handler('sendChatAction', payload, (data) ->
     cb data)
 
 # Use this method to get a list of profile pictures for a user.
@@ -167,5 +186,5 @@ module.exports.getUserProfilePictures = (user_id, offset = '', limit = '', cb) -
     offset : offset
     limit : limit
 
-  url_handler('getUserProfilePictures', payload, (data) ->
+  post_handler('getUserProfilePictures', payload, (data) ->
     cb data)

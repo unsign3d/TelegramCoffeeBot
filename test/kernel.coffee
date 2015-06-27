@@ -1,5 +1,5 @@
 assert = require 'assert'
-kernel = require '../lib/kernel'
+app = require '../lib/app'
 
 # describe 'Kernel functions', () ->
 #   it 'should return true if the connection is good', () ->
@@ -10,5 +10,5 @@ kernel = require '../lib/kernel'
 #         first_name: "coffeebot"
 #         username: "unsycoffeebot"
 #     assert.equal kernel.getMe, response
-kernel.getMe (data)->
-  console.log data
+console.log app
+app.takeAction ()->
