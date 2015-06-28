@@ -10,5 +10,4 @@ app = require '../lib/app'
 #         first_name: "coffeebot"
 #         username: "unsycoffeebot"
 #     assert.equal kernel.getMe, response
-console.log app
 app.takeAction ()->

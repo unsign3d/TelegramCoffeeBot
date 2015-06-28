@@ -8,6 +8,8 @@
 config = require '../config'
 query   = require 'querystring'
 request = require 'request'
+formData = require 'form-data'
+fs = require 'fs'
 
 offset =  0
 
@@ -33,7 +35,6 @@ post_handler = (cmd, payload, callback) ->
       callback body  # Show the HTML for the Google homepage.
     else
       console.error "error in request"
-      console.error body
       callabck null
 
 get_handler = (cmd, callback) ->
@@ -47,7 +48,6 @@ get_handler = (cmd, callback) ->
       callback body  # Show the HTML for the Google homepage.
     else
       console.error "error in request"
-      console.error body
       callback null
 
 
@@ -83,16 +83,27 @@ module.exports.forwardMessage = (chat_id, from_chat_id, message_id, cb) ->
     cb data)
 
 # Use this method to send photos. On success the sent message is returned
-module.exports.sendPhoto = (chat_id, photo, caption = '', reply_to_message_id = '', reply_markup = '', cb) ->
-  payload =
-    chat_id : chat_id
-    photo : photo
-    caption : caption
-    reply_to_message_id : reply_to_message_id
-    reply_markup : reply_markup
+module.exports.sendPhoto = (chat_id, photo, caption, reply_to_message_id, reply_markup, cb) ->
 
-  post_handler('sendPhoto', payload, (data) ->
-    cb data)
+  form =
+    chat_id : chat_id
+    photo : request photo
+    caption: caption
+    reply_to_message_id: reply_to_message_id
+    reply_markup: reply_markup
+
+  options =
+    url : config.api_url+config.api_token+'/sendPhoto'
+    formData: form
+
+  request.post options, (err2, resp2, body2) ->
+    if !err2 and resp2.statusCode == 200
+        console.log "ok"
+        cb resp2
+      else
+        console.log "no"
+        console.log body2
+        cb null
 
 # Use this method to send audio files, if you want Telegram clients to display
 # the file as a playable voice message. For this to work, your audio must be
@@ -100,47 +111,91 @@ module.exports.sendPhoto = (chat_id, photo, caption = '', reply_to_message_id = 
 # On success, the sent Message is returned.
 
 module.exports.sendAudio = (chat_id, audio, reply_to_message_id = '', reply_markup = '', cb) ->
-  payload =
-    chat_id : chat_id
-    audio : audio
-    reply_to_message_id : reply_to_message_id
-    reply_markup : reply_markup
+    form =
+      chat_id : chat_id
+      audio : request audio
+      caption: caption
+      reply_to_message_id: reply_to_message_id
+      reply_markup: reply_markup
 
-  post_handler('sendAudio', payload, (data) ->
-    cb data)
+    options =
+      url : config.api_url+config.api_token+'/sendAudio'
+      formData: form
+
+    request.post options, (err2, resp2, body2) ->
+      if !err2 and resp2.statusCode == 200
+          console.log "ok"
+          cb resp2
+        else
+          console.log "no"
+          console.log body2
+          cb null
 
 # Use this method to send general files. On success, the sent Message is returned
 module.exports.sendDocument = (chat_id, document, reply_to_message_id = '', reply_markup = '', cb) ->
-  payload =
-    chat_id : chat_id
-    document : document
-    reply_to_message_id : reply_to_message_id
-    reply_markup : reply_markup
+    form =
+      chat_id : chat_id
+      audio : request audio
+      caption: caption
+      reply_to_message_id: reply_to_message_id
+      reply_markup: reply_markup
 
-  post_handler('sendDocument', payload, (data) ->
-    cb data)
+    options =
+      url : config.api_url+config.api_token+'/sendAudio'
+      formData: form
+
+    request.post options, (err2, resp2, body2) ->
+      if !err2 and resp2.statusCode == 200
+          console.log "ok"
+          cb resp2
+        else
+          console.log "no"
+          console.log body2
+          cb null
 
 # Use this method to send .webp stickers. On success, the sent Message is returned
 module.exports.sendSticker = (chat_id, sticker, reply_to_message_id = '', reply_markup = '', cb) ->
-  payload =
-    chat_id : chat_id
-    sticker : sticker
-    reply_to_message_id : reply_to_message_id
-    reply_markup : reply_markup
+    form =
+      chat_id : chat_id
+      sticker : request sticker
+      caption: caption
+      reply_to_message_id: reply_to_message_id
+      reply_markup: reply_markup
 
-  post_handler('sendSticker', payload, (data) ->
-    cb data)
+    options =
+      url : config.api_url+config.api_token+'/sendSticker'
+      formData: form
+
+    request.post options, (err2, resp2, body2) ->
+      if !err2 and resp2.statusCode == 200
+          console.log "ok"
+          cb resp2
+        else
+          console.log "no"
+          console.log body2
+          cb null
 
 # Use this method to send general files. On success, the sent Message is returned
 module.exports.sendFiles = (chat_id, file, reply_to_message_id = '', reply_markup = '', cb) ->
-  payload =
-    chat_id : chat_id
-    file : file
-    reply_to_message_id : reply_to_message_id
-    reply_markup : reply_markup
+    form =
+      chat_id : chat_id
+      files : request files
+      caption: caption
+      reply_to_message_id: reply_to_message_id
+      reply_markup: reply_markup
 
-  post_handler('sendVideo', payload, (data)->
-    cb data)
+    options =
+      url : config.api_url+config.api_token+'/sendFiles'
+      formData: form
+
+    request.post options, (err2, resp2, body2) ->
+      if !err2 and resp2.statusCode == 200
+          console.log "ok"
+          cb resp2
+        else
+          console.log "no"
+          console.log body2
+          cb null
 
 # Use this method to send video files, Telegram client suppor mp4 videos.
 # other format may be sent as Document On success, the sent Message is returned

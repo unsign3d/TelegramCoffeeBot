@@ -20,5 +20,5 @@ module.exports.doSomething = (data) ->
    number = Math.floor(Math.random() * 3000)
 
    get_handler number, (body) ->
-     kernel.sendMessage data.chat.id, "http://media.oboobs.ru/"+body[0].preview, (resp) ->
-       console.log resp
+     kernel.sendPhoto data.chat.id, "http://media.oboobs.ru/"+body[0].preview, '', '', '', (resp) ->
+       console.log ""
