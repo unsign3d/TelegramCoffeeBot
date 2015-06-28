@@ -1,3 +1,7 @@
-app  = require './lib/kernel'
+app  = require './lib/app'
 
-app.start()
+action = ()->
+  app.takeAction () ->
+
+console.log action
+setInterval(action, 500);
