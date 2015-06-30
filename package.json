@@ -2,16 +2,16 @@
   "name": "telegramCoffeeBot",
   "version": "0.0.1",
   "description": "Just another telegram bot",
-  "main": "index.js",
+  "main": "coffee index.coffee",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "forever -c coffee index.coffee"
   },
   "dependencies" : {
     "request": "^2.58.0",
     "form-data": "1.0.0-rc1",
     "coffee-script": "1.9.3",
-    "infinite-loop": "0.2.2"
+    "supervisor" : "0.7.0"
   },
-  "author": "Luca Bruzzone https://me.unsigned.it",
+  "author": "Luca Bruzzone https://me.unsigned.it, Mattia Giacone",
   "license": "MIT"
 }
