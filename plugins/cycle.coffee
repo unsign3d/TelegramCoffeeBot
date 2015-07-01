@@ -1,8 +1,8 @@
 # Ingress cycle calculator
 kernel = require '../lib/kernel'
 
-module.exports.doSomething = (data) ->
-	# milliseconds per cycle 
+module.exports.doSomething = (data, option) ->
+	# milliseconds per cycle
 	mCycle = 175*60*60*1000
 	# millisecond in a checkpoint
 	mCheck = 5*60*60*1000

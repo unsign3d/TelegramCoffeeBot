@@ -1,10 +1,18 @@
 kernel = require '../lib/kernel'
 request = require 'request'
 
-get_handler = (callback) ->
+get_handler = (number, callback) ->
+  console.error number
+  if isNaN number
+    url = "https://xkcd.com/info.0.json"
+  else
+    url = "https://xkcd.com/"+number+"/info.0.json"
+
+  console.log url
+
   options =
     method : 'GET'
-    uri : "https://xkcd.com/614/info.0.json"
+    uri : url
     json : true
 
   request options, (err, resp, body) ->
@@ -16,10 +24,13 @@ get_handler = (callback) ->
       callback null
 
 
-module.exports.doSomething = (data) ->
-   number = Math.floor(Math.random() * 3000)
+module.exports.doSomething = (data, option) ->
+   if option == undefined
+     number = "ultimo"
+   else
+     number = option
 
-   get_handler (body) ->
+   get_handler number, (body) ->
 
      kernel.sendPhoto data.chat.id, body.img, '', '', '', (resp) ->
        console.log ""
