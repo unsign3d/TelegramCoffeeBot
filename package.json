@@ -4,7 +4,7 @@
   "description": "Just another telegram bot",
   "main": "coffee index.coffee",
   "scripts": {
-    "start": "forever -c coffee index.coffee"
+    "start": "supervisor -c coffee index.coffee"
   },
   "dependencies" : {
     "request": "^2.58.0",
