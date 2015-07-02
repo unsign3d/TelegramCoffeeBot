@@ -7,7 +7,7 @@ module.exports.doSomething = (data) ->
 	# millisecond in a checkpoint
 	mCheck = 5*60*60*1000
 	# current time
-	n=Date.now();
+	n=Date.Now()
 	#  start of current cycle
 	startCycle=Math.floor(n/mCycle)*mCycle
 	# end of current cycle
