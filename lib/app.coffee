@@ -4,10 +4,12 @@ config = require '../config'
 module.exports.takeAction = (cb) ->
   update = kernel.getUpdates (data) ->
     if data != null
-      action = data.text.match(/\/([a-zA-z0-9]+)/gi)
-      if action != null and action.constructor == Array
-        action = action[0].substr 1
-        console.log action
+      input = data.text.match(/\/([a-zA-z0-9]+)( *)([a-zA-z0-9]*)/gi)[0]
+      input = input.split " "
+      if input != null and input.constructor == Array
+        action = input[0].substr 1
+        options = input[1]
+
         if action != null and action in config.plugins
           plugin = require '../plugins/'+action
-          plugin.doSomething data
+          plugin.doSomething data, options
