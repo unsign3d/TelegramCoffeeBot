@@ -1,7 +1,7 @@
 kernel = require '../lib/kernel'
 
 module.exports.doSomething = (data, option) ->
-	if option == undefined
+	if option == null
 		kernel.sendMessage data.chat.id, "use of echo is /echo message", (resp) ->
 			console.log resp
 		return

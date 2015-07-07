@@ -25,7 +25,7 @@ get_handler = (number, callback) ->
 
 
 module.exports.doSomething = (data, option) ->
-   if option == undefined
+   if option == null
      number = "ultimo"
    else
      number = option

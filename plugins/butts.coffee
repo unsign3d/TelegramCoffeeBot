@@ -16,8 +16,11 @@ get_handler = (number, option, callback) ->
       callback null
 
 
-module.exports.doSomething = (data) ->
-   number = Math.floor(Math.random() * 3000)
+module.exports.doSomething = (data, option) ->
+   if option == null
+     number = Math.floor(Math.random() * 3000)
+   else
+     number = option
 
    get_handler number, (body) ->
      kernel.sendPhoto data.chat.id, "http://media.butts.ru/"+body[0].preview, '', '', '', (resp) ->

@@ -17,7 +17,7 @@ get_handler = (number, callback) ->
 
 
 module.exports.doSomething = (data, option) ->
-   if option == undefined
+   if option == null
      number = Math.floor(Math.random() * 3000)
    else
      number = option
