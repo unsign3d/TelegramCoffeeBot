@@ -16,7 +16,10 @@ offset =  0
 lastUpdate = (list) ->
   mes = list[list.length-1]
   if offset < mes.update_id
+    console.log offset
     offset = mes.update_id
+    console.log mes.update_id
+
     return mes.message
   else
     return null
@@ -35,7 +38,7 @@ post_handler = (cmd, payload, callback) ->
       callback body  # Show the HTML for the Google homepage.
     else
       console.error "error in request"
-      callabck null
+      callback null
 
 get_handler = (cmd, callback) ->
   options =
@@ -54,7 +57,7 @@ get_handler = (cmd, callback) ->
 # Use this method to receive incoming updates using long polling
 module.exports.getUpdates = (cb) ->
   payload =
-    offset: 734575207
+    offset: 7645647
   post_handler('getUpdates', payload, (data) ->
     cb(lastUpdate data.result))
 
@@ -243,3 +246,32 @@ module.exports.getUserProfilePictures = (chat_id, user_id, offset = '', limit = 
 
   post_handler('getUserProfilePictures', payload, (data) ->
     cb data)
+
+module.exports.writeRedis = (val,key) ->
+  redis = require('redis');
+  client = redis.createClient(config.redis_port, config.redis_host, config.redis_options);
+  console.log val 
+  console.log key
+  client.on 'ready', ->
+    client.set key,val,redis.print
+    client.end
+
+
+module.exports.readRedis = (key)-> 
+  redis = require('redis');
+  client = redis.createClient(config.redis_port, config.redis_host, config.redis_options);
+  client.on 'ready', ->
+    client.get key, (err, reply) ->
+      client.end
+      console.log reply
+      #return 
+      reply
+    
+
+
+      
+      
+
+
+
+
