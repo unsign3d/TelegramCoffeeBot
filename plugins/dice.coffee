@@ -5,9 +5,8 @@ module.exports.doSomething = (data, option) ->
 	 	max = 6
 	else
 	 	max = parseInt(option)
-	 	max=max
-
-	 
+	 	if max > 100
+	 		max = 100
 	d = Math.floor(Math.random() * (max))
 	d=d+1
 	kernel.sendMessage data.chat.id, "Dice rolled "+d, (resp) ->
