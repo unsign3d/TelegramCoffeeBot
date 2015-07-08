@@ -13,10 +13,12 @@ module.exports.takeAction = (cb) ->
             if input.indexOf(" ") >-1
               #the command has some options
               action = input.substr(0,input.indexOf(' '))
+              action = action.toLowerCase()
               options = input.substr(input.indexOf(' ')+1)
             else
               #no options specified for the command
-              action = input
+              action = input.toLowerCase()
+
               options = null
 
             if action != null and action in config.plugins

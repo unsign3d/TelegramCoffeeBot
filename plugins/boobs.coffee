@@ -1,10 +1,10 @@
 kernel = require '../lib/kernel'
 request = require 'request'
 
-get_handler = (number, callback) ->
+get_handler = (callback) ->
   options =
     method : 'GET'
-    uri :"http://api.oboobs.ru/boobs/" + number + "/1/rank/"
+    uri :"http://api.oboobs.ru/noise/1/"
     json : true
 
   request options, (err, resp, body) ->
@@ -17,11 +17,9 @@ get_handler = (number, callback) ->
 
 
 module.exports.doSomething = (data, option) ->
-   if option == null
-     number = Math.floor(Math.random() * 3000)
-   else
-     number = option
-
-   get_handler number, (body) ->
-     kernel.sendPhoto data.chat.id, "http://media.oboobs.ru/"+body[0].preview, '', '', '', (resp) ->
+     get_handler  (body) ->
+      kernel.sendPhoto data.chat.id, "http://media.oboobs.ru/"+body[0].preview, '', '', '', (resp) ->
        console.log ""
+ 
+
+  
