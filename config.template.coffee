@@ -5,4 +5,6 @@ module.exports =
   redis_port: ''
   redis_host: ''
   redis_option: ''
-  plugins: ['boobs', 'hello', 'xkcd', 'cycle', 'getid', 'dice', 'butts' ]
+  bot_admin: '0'
+  goo_apikey: ''
+  plugins: ['boobs', 'hello', 'xkcd', 'cycle', 'getid', 'dice', 'butts','/shorten' ]

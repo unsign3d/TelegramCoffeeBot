@@ -59,7 +59,8 @@ module.exports.getUpdates = (cb) ->
   payload =
     offset: 7645647
   post_handler('getUpdates', payload, (data) ->
-    cb(lastUpdate data.result))
+    if data != null
+      cb(lastUpdate data.result))
 
 # A simple method for testing your bot's auth token. Requires no parameters.
 # Returns basic information about the bot in form of a User object.
