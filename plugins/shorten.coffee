@@ -2,7 +2,7 @@ kernel = require '../lib/kernel'
 googl = require 'goo.gl'
 config = require '../config'
 
-
+#Shorten an url using the goo.gl API require a google API key
  
 module.exports.doSomething = (data, option) ->
   RegExp pattern = new RegExp(/([--:\w?@%&+~#=]*\.[a-z]{2,4}\/{0,2})((?:[?&](?:\w+)=(?:\w+))+|[--:\w?@%&+~#=]+)?/ig)

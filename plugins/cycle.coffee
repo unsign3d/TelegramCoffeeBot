@@ -71,7 +71,7 @@ calculateCycleDate = (n) ->
 	message +="\n"
 	message +="Cycle end "+formatDate(endCycle)
 	message +="\n"
-	message +="List of Chekcpoint \n"
+	message +="List of Checkpoint \n"
 	message +=formatDate(startCheck)+"\n"
 	startCheck.setHours(startCheck.getHours()+5)
 	message +=formatDate(startCheck)+"\n"
