@@ -3,6 +3,9 @@ googl = require 'goo.gl'
 config = require '../config'
 
 module.exports.doSomething = (data, option) ->
+	if option==null
+		kernel.sendMessage data.chat.id, "You must provide a goo.gl shorturl", (resp) ->
+
 	RegExp pattern = new RegExp(/([--:\w?@%&+~#=]*\.[a-z]{2,4}\/{0,2})((?:[?&](?:\w+)=(?:\w+))+|[--:\w?@%&+~#=]+)?/ig)
 	test=pattern.test(option)
 	if test

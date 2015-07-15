@@ -10,6 +10,7 @@ query   = require 'querystring'
 request = require 'request'
 formData = require 'form-data'
 fs = require 'fs'
+#redis = require 'redis'
 
 offset =  0
 
@@ -249,7 +250,6 @@ module.exports.getUserProfilePictures = (chat_id, user_id, offset = '', limit = 
     cb data)
 
 module.exports.writeRedis = (val,key) ->
-  redis = require('redis');
   client = redis.createClient(config.redis_port, config.redis_host, config.redis_options);
   console.log val 
   console.log key
@@ -259,7 +259,6 @@ module.exports.writeRedis = (val,key) ->
 
 
 module.exports.readRedis = (key)-> 
-  redis = require('redis');
   client = redis.createClient(config.redis_port, config.redis_host, config.redis_options);
   client.on 'ready', ->
     client.get key, (err, reply) ->
