@@ -3,14 +3,14 @@ This is just an experimental bot done mainly to learn coffeescript
 
 #Author
 - Luca Bruzzone https://me.unsigned.it (core)
-- Mattia Giacone (most of the plugins)
+- Mattia Giacone http://mattiagiacone.me/ (most of the plugins and core fixes)
 
 # How to use it
 install dependencies with npm install and npm -g install supervisor, then start
 with npm start
 
 # Completeness
-Now is usable, foe now is in beta status and is not tested, so yeah...
+Still in beta status but now it seems that is doesn't crash, still has some issues but usable
 
 ## Contributing
 If you want contribute me fork master (for now), apply changes and PR
