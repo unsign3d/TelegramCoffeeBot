@@ -10,7 +10,9 @@ Author
 How to use it
 =============
 
-install dependencies with npm install and npm -g install supervisor, then start with npm start
+install dependencies with npm install and npm -g install supervisor, then start with npm start.
+
+You need also install redis, this is needed to enable some functionalities
 
 Completeness
 ============
