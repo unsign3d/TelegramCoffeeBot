@@ -1,6 +1,11 @@
 #Telegram CoffeeBot This is just an experimental bot done mainly to learn coffeescript
 
-#Author - Luca Bruzzone https://me.unsigned.it (core) - Mattia Giacone http://mattiagiacone.me (most of the plugins)
+Author
+======
+
+-	Luca Bruzzone https://me.unsigned.it (core)
+
+-	Mattia Giacone http://mattiagiacone.me (most of the plugins)
 
 How to use it
 =============
