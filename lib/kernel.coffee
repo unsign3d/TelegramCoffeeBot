@@ -12,7 +12,7 @@ formData = require 'form-data'
 fs = require 'fs'
 #redis = require 'redis'
 
-offset =  0
+offset =  178065302
 
 lastUpdate = (list) ->
   mes = list[list.length-1]
@@ -39,6 +39,9 @@ post_handler = (cmd, payload, callback) ->
       callback body  # Show the HTML for the Google homepage.
     else
       console.error "error in request"
+      console.log err
+      console.log resp
+      console.log body
       callback null
 
 get_handler = (cmd, callback) ->
@@ -58,7 +61,7 @@ get_handler = (cmd, callback) ->
 # Use this method to receive incoming updates using long polling
 module.exports.getUpdates = (cb) ->
   payload =
-    offset: 7645647
+    offset: offset
   post_handler('getUpdates', payload, (data) ->
     if data != null
       cb(lastUpdate data.result))
