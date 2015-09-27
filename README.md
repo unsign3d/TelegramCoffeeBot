@@ -1,4 +1,4 @@
-#Telegram CoffeeBot This is just an experimental bot done mainly to learn coffeescript
+#Telegram CoffeeBot
 
 Author
 ======
