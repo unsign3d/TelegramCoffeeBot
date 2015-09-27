@@ -10,13 +10,17 @@ query   = require 'querystring'
 request = require 'request'
 formData = require 'form-data'
 fs = require 'fs'
+#redis = require 'redis'
 
-offset =  0
+offset =  178065302
 
 lastUpdate = (list) ->
   mes = list[list.length-1]
   if offset < mes.update_id
+    console.log offset
     offset = mes.update_id
+    console.log mes.update_id
+
     return mes.message
   else
     return null
@@ -35,7 +39,10 @@ post_handler = (cmd, payload, callback) ->
       callback body  # Show the HTML for the Google homepage.
     else
       console.error "error in request"
-      callabck null
+      console.log err
+      console.log resp
+      console.log body
+      callback null
 
 get_handler = (cmd, callback) ->
   options =
@@ -54,9 +61,10 @@ get_handler = (cmd, callback) ->
 # Use this method to receive incoming updates using long polling
 module.exports.getUpdates = (cb) ->
   payload =
-    offset: 734575207
+    offset: offset
   post_handler('getUpdates', payload, (data) ->
-    cb(lastUpdate data.result))
+    if data != null
+      cb(lastUpdate data.result))
 
 # A simple method for testing your bot's auth token. Requires no parameters.
 # Returns basic information about the bot in form of a User object.
@@ -243,3 +251,30 @@ module.exports.getUserProfilePictures = (chat_id, user_id, offset = '', limit = 
 
   post_handler('getUserProfilePictures', payload, (data) ->
     cb data)
+
+module.exports.writeRedis = (val,key) ->
+  client = redis.createClient(config.redis_port, config.redis_host, config.redis_options);
+  console.log val 
+  console.log key
+  client.on 'ready', ->
+    client.set key,val,redis.print
+    client.end
+
+
+module.exports.readRedis = (key)-> 
+  client = redis.createClient(config.redis_port, config.redis_host, config.redis_options);
+  client.on 'ready', ->
+    client.get key, (err, reply) ->
+      client.end
+      console.log reply
+      #return 
+      reply
+    
+
+
+      
+      
+
+
+
+

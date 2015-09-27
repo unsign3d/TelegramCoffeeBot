@@ -25,10 +25,10 @@ get_handler = (number, callback) ->
 
 
 module.exports.doSomething = (data, option) ->
-   if option == undefined
+   if option == null || isNaN(option)
      number = "ultimo"
    else
-     number = option
+     number = parseInt(option)
 
    get_handler number, (body) ->
 

@@ -10,8 +10,9 @@
     "request": "^2.58.0",
     "form-data": "1.0.0-rc1",
     "coffee-script": "1.9.3",
-    "supervisor" : "0.7.0"
+    "supervisor" : "0.7.0",
+    "goo.gl" : "0.1.3"
   },
-  "author": "Luca Bruzzone https://me.unsigned.it, Mattia Giacone",
+  "author": "Luca Bruzzone https://me.unsigned.it, Mattia Giacone http://mattiagiacone.me",
   "license": "MIT"
 }

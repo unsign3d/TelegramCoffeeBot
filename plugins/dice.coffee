@@ -1,11 +1,13 @@
 kernel = require '../lib/kernel'
 
-<<<<<<< HEAD
-module.exports.doSomething = (data) ->
-	d = Math.floor(Math.random() * 7)
-=======
 module.exports.doSomething = (data, option) ->
-	d = Math.floor(Math.random() * (6 - 1) + 1)
->>>>>>> upstream/master
+	if option == null || isNaN(option)
+	 	max = 6
+	else
+	 	max = parseInt(option)
+	 	if max > 100
+	 		max = 100
+	d = Math.floor(Math.random() * (max))
+	d=d+1
 	kernel.sendMessage data.chat.id, "Dice rolled "+d, (resp) ->
 		console.log resp

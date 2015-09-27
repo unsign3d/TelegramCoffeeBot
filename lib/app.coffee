@@ -2,14 +2,33 @@ kernel = require './kernel'
 config = require '../config'
 
 module.exports.takeAction = (cb) ->
-  update = kernel.getUpdates (data) ->
-    if data != null
-      input = data.text.match(/\/([a-zA-z0-9]+)( *)([a-zA-z0-9]*)/gi)[0]
-      input = input.split " "
-      if input != null and input.constructor == Array
-        action = input[0].substr 1
-        options = input[1]
+  try
+    update = kernel.getUpdates (data) ->
+      if data != null
+        input = data.text
+      # if the bot is added to a new chat
+        if input != undefined
+          if input[0]=="/"
+            # is a command
+            if input.indexOf(" ") >-1
+              #the command has some options
+              action = input.substr(0,input.indexOf(' '))
+              action = action.toLowerCase()
+              options = input.substr(input.indexOf(' ')+1)
+            else
+              #no options specified for the command
+              action = input.toLowerCase()
 
-        if action != null and action in config.plugins
-          plugin = require '../plugins/'+action
-          plugin.doSomething data, options
+              options = null
+
+            if action != null and action in config.plugins
+              plugin = require '../plugins'+action
+              plugin.doSomething data, options
+            else
+              #Unknown Command
+              kernel.sendMessage data.chat.id, "Unknown command", (resp) ->
+                console.log resp
+  catch error
+    console.log error
+
+
