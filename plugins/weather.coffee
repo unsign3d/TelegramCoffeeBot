@@ -19,16 +19,16 @@ module.exports.doSomething = (data, option) ->
         option = "Turin"
      get_handler  option, (body) ->
       if body.cod=="404"
-         message= "Città non valida" 
+         message= "City not found" 
       else
         city = body.name + ", "+body.sys.country
         console.log city
-        message= "Condizione a "+city+" : "+body.weather[0].description
+        message= "Condition in  "+city+" : "+body.weather[0].description
         message += "\n"
-        message +="Temperatura: " +body.main.temp
+        message +="Temperature: " +body.main.temp
         message += " Celsius"
         message += "\n"
-        message += "Vento: " +body.wind.speed 
+        message += "Wind speed: " +body.wind.speed 
         message += " m/s"
       kernel.sendMessage data.chat.id,message  , (resp) ->
         console.log resp
