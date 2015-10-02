@@ -15,16 +15,20 @@ get_handler = (option,callback) ->
       callback null
  
 module.exports.doSomething = (data, option) ->
+     if option == null 
+        option = "Turin"
      get_handler  option, (body) ->
       if body.cod=="404"
-         message= "Not a valid city" 
+         message= "City not found" 
       else
-        message= "Condition: "+body.weather[0].description
+        city = body.name + ", "+body.sys.country
+        console.log city
+        message= "Condition in  "+city+" : "+body.weather[0].description
         message += "\n"
         message +="Temperature: " +body.main.temp
         message += " Celsius"
         message += "\n"
-        message += "Wind Speed: " +body.wind.speed 
+        message += "Wind speed: " +body.wind.speed 
         message += " m/s"
       kernel.sendMessage data.chat.id,message  , (resp) ->
         console.log resp

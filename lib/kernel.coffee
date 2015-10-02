@@ -55,6 +55,7 @@ get_handler = (cmd, callback) ->
       callback body  # Show the HTML for the Google homepage.
     else
       console.error "error in request"
+      
       callback null
 
 
@@ -75,7 +76,8 @@ module.exports.getMe = (cb) ->
 
 # Use this method to send text messages. On success, the sent Message is returned.
 module.exports.sendMessage = (chat_id, message, cb) ->
-
+  
+  message = encodeURIComponent message
   get_handler('sendMessage?chat_id='+chat_id+'&text='+message, (data) ->
 
     cb data )
