@@ -1,3 +1,5 @@
+# This is not anymore maintained, use this as inspirational advices, but don't run it into production, or do it at your own risk
+
 #Telegram CoffeeBot
 
 Author
